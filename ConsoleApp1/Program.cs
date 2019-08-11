@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.IO;
 using System.Threading;
 
 namespace ConsoleApp1
@@ -9,8 +10,11 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Informe o diretorio que vc extraiu o chromedriver_win32:");
-            string diretorio = Console.ReadLine();
+            var thisPath = System.IO.Directory.GetCurrentDirectory();
+
+            //Abri o navegador e acessa o site do github
+            IWebDriver driver = new ChromeDriver($@"{thisPath}\chromedriver_win32");
+            driver.Navigate().GoToUrl("https://github.com/login");
 
             Console.WriteLine("Informe o Login do Github:");
             string login = Console.ReadLine();
@@ -18,10 +22,6 @@ namespace ConsoleApp1
             Console.WriteLine("Informe a senha do Github:");
             string senha = Console.ReadLine();
             
-            //Abri o navegador e acessa o site do github
-            IWebDriver driver = new ChromeDriver(diretorio);
-            driver.Navigate().GoToUrl("https://github.com/login");
-
             Thread.Sleep(2000);
 
             //Digita o login informado
@@ -47,12 +47,9 @@ namespace ConsoleApp1
             //Desloga do site
             driver.FindElement(By.XPath("/html/body/div[1]/header/div[8]/details/details-menu/form/button")).Click();
 
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
 
             driver.Close();
-
-
-
 
         }
     }
